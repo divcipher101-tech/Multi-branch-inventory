@@ -6,23 +6,48 @@ import {
 } from 'lucide-react';
 import './Sidebar.css';
 
-const menuItems = [
-  { path: '/', label: 'Dashboard', icon: LayoutDashboard },
-  { path: '/products', label: 'Products', icon: Package },
-  { path: '/inventory', label: 'Inventory', icon: Archive },
-  { path: '/warehouse', label: 'Warehouse', icon: Warehouse },
-  { path: '/sales', label: 'Sales (POS)', icon: ShoppingCart },
-  { path: '/transactions', label: 'Transactions', icon: Receipt },
-  { path: '/transfers', label: 'Stock Transfers', icon: ArrowRightLeft },
-  { path: '/customers', label: 'Customers', icon: Users },
-  { path: '/suppliers', label: 'Suppliers', icon: Truck },
-  { path: '/branches', label: 'Branches', icon: Store },
-  { path: '/expenses', label: 'Expenses', icon: DollarSign },
-  { path: '/cash', label: 'Cash Management', icon: Wallet },
-  { path: '/reports', label: 'Reports', icon: BarChart3 },
-  { path: '/audit', label: 'Audit Logs', icon: ShieldCheck },
-  { path: '/roles', label: 'Users & Roles', icon: UserCog },
-  { path: '/settings', label: 'Settings', icon: Settings },
+const navCategories = [
+  {
+    title: 'OVERVIEW',
+    items: [
+      { path: '/', label: 'Dashboard', icon: LayoutDashboard }
+    ]
+  },
+  {
+    title: 'OPERATIONS',
+    items: [
+      { path: '/products', label: 'Products', icon: Package },
+      { path: '/inventory', label: 'Inventory', icon: Archive },
+      { path: '/warehouse', label: 'Warehouse', icon: Warehouse },
+      { path: '/sales', label: 'Sales (POS)', icon: ShoppingCart },
+      { path: '/transactions', label: 'Transactions', icon: Receipt },
+      { path: '/transfers', label: 'Stock Transfers', icon: ArrowRightLeft },
+    ]
+  },
+  {
+    title: 'RELATIONSHIPS',
+    items: [
+      { path: '/customers', label: 'Customers', icon: Users },
+      { path: '/suppliers', label: 'Suppliers', icon: Truck },
+      { path: '/branches', label: 'Branches', icon: Store },
+    ]
+  },
+  {
+    title: 'FINANCE',
+    items: [
+      { path: '/expenses', label: 'Expenses', icon: DollarSign },
+      { path: '/cash', label: 'Cash Management', icon: Wallet },
+    ]
+  },
+  {
+    title: 'INSIGHTS & ADMIN',
+    items: [
+      { path: '/reports', label: 'Reports', icon: BarChart3 },
+      { path: '/audit', label: 'Audit Logs', icon: ShieldCheck },
+      { path: '/roles', label: 'Users & Roles', icon: UserCog },
+      { path: '/settings', label: 'Settings', icon: Settings },
+    ]
+  }
 ];
 
 interface SidebarProps {
@@ -34,31 +59,37 @@ export default function Sidebar({ onLogout }: SidebarProps) {
     <aside className="sidebar">
       <div className="sidebar-header">
         <div className="logo-container">
-          <img src="/nectar_logo.jpg" alt="Nectar Logo" className="logo-image" />
+          <div className="logo-icon">N</div>
           <div className="logo-text">
             <h2>Nectar</h2>
-            <p>Ultra-Premium Distribution</p>
           </div>
         </div>
       </div>
       
       <nav className="sidebar-nav">
-        <ul>
-          {menuItems.map((item) => {
-            const Icon = item.icon;
-            return (
-              <li key={item.path}>
-                <NavLink 
-                  to={item.path} 
-                  className={({ isActive }) => isActive ? 'nav-item active' : 'nav-item'}
-                >
-                  <Icon className="nav-icon" size={20} />
-                  <span>{item.label}</span>
-                </NavLink>
-              </li>
-            );
-          })}
-        </ul>
+        <div className="nav-scroll-area">
+          {navCategories.map((category) => (
+            <div key={category.title} className="nav-category">
+              <h4 className="category-title">{category.title}</h4>
+              <ul>
+                {category.items.map((item) => {
+                  const Icon = item.icon;
+                  return (
+                    <li key={item.path}>
+                      <NavLink 
+                        to={item.path} 
+                        className={({ isActive }) => isActive ? 'nav-item active' : 'nav-item'}
+                      >
+                        <Icon className="nav-icon" size={20} />
+                        <span>{item.label}</span>
+                      </NavLink>
+                    </li>
+                  );
+                })}
+              </ul>
+            </div>
+          ))}
+        </div>
       </nav>
 
       <div className="sidebar-footer">

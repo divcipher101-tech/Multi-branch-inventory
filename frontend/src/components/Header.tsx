@@ -1,5 +1,5 @@
 import { useState, useEffect, useRef } from 'react';
-import { Search, Bell, User, LogOut, Settings, UserCircle } from 'lucide-react';
+import { Search, Bell, Settings, LogOut, UserCircle, ChevronDown, Store } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 import './Header.css';
 
@@ -40,22 +40,36 @@ export default function Header({ onLogout }: HeaderProps) {
   };
 
   return (
-    <header className="top-header">
-      <div className="header-search">
-        <Search className="search-icon" size={18} />
-        <input type="text" placeholder="Search products, branches..." />
+    <header className="top-header glass">
+      <div className="header-search-container">
+        <div className="search-pill">
+          <Search className="search-icon" size={18} />
+          <input type="text" placeholder="Search products, invoices, customers..." />
+        </div>
       </div>
       
       <div className="header-actions">
+        <button className="branch-selector">
+          <Store size={18} className="text-muted" />
+          <span>All Branches</span>
+          <ChevronDown size={14} className="text-muted" />
+        </button>
+
+        <div className="action-divider"></div>
+
         <button className="icon-btn" title="Notifications">
           <Bell size={20} />
           <span className="badge pulse">3</span>
         </button>
         
+        <button className="icon-btn" title="Settings">
+          <Settings size={20} />
+        </button>
+        
         <div className="user-profile-container" ref={dropdownRef}>
           <div className="user-profile" onClick={() => setDropdownOpen(!dropdownOpen)}>
             <div className="avatar">
-              <User size={20} />
+              {user.name?.substring(0, 2).toUpperCase() || 'AD'}
             </div>
             <div className="user-info">
               <span className="user-name">{user.name}</span>
@@ -66,19 +80,24 @@ export default function Header({ onLogout }: HeaderProps) {
           {dropdownOpen && (
             <div className="profile-dropdown slide-down-fade">
               <div className="dropdown-header">
-                <p className="dropdown-name">{user.name}</p>
-                <p className="dropdown-email">{user.name?.toLowerCase().replace(' ', '')}@nectar.com</p>
+                <div className="avatar large">
+                  {user.name?.substring(0, 2).toUpperCase() || 'AD'}
+                </div>
+                <div className="dropdown-header-text">
+                  <p className="dropdown-name">{user.name}</p>
+                  <p className="dropdown-email">{user.name?.toLowerCase().replace(' ', '')}@nectar.com</p>
+                </div>
               </div>
               <div className="dropdown-divider"></div>
               <button className="dropdown-item" onClick={() => { setDropdownOpen(false); navigate('/settings'); }}>
                 <UserCircle size={16} /> My Profile
               </button>
               <button className="dropdown-item" onClick={() => { setDropdownOpen(false); navigate('/settings'); }}>
-                <Settings size={16} /> Settings
+                <Settings size={16} /> Preferences
               </button>
               <div className="dropdown-divider"></div>
               <button className="dropdown-item text-danger" onClick={handleLogoutClick}>
-                <LogOut size={16} /> Log out
+                <LogOut size={16} /> Sign out
               </button>
             </div>
           )}
