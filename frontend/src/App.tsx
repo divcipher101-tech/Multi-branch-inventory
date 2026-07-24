@@ -1,5 +1,7 @@
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
 import { useState, useEffect } from 'react';
+import { ThemeProvider } from './context/ThemeContext';
+import { BranchProvider } from './context/BranchContext';
 import Layout from './components/Layout';
 import Dashboard from './pages/Dashboard';
 import Login from './pages/Login';
@@ -50,38 +52,42 @@ function App() {
   };
 
   return (
-    <BrowserRouter>
-      <Routes>
-        <Route path="/login" element={
-          isAuthenticated ? <Navigate to="/" replace /> : <Login onLogin={handleLogin} />
-        } />
-        <Route path="/forgot-password" element={<ForgotPassword />} />
-        
-        {/* Protected Routes */}
-        <Route path="/" element={
-          <ProtectedRoute isAuthenticated={isAuthenticated}>
-            <Layout onLogout={handleLogout}><Dashboard /></Layout>
-          </ProtectedRoute>
-        } />
-        
-        {/* Placeholders for other routes */}
-        <Route path="/products" element={<ProtectedRoute isAuthenticated={isAuthenticated}><Layout onLogout={handleLogout}><Products /></Layout></ProtectedRoute>} />
-        <Route path="/inventory" element={<ProtectedRoute isAuthenticated={isAuthenticated}><Layout onLogout={handleLogout}><Inventory /></Layout></ProtectedRoute>} />
-        <Route path="/warehouse" element={<ProtectedRoute isAuthenticated={isAuthenticated}><Layout onLogout={handleLogout}><Warehouse /></Layout></ProtectedRoute>} />
-        <Route path="/sales" element={<ProtectedRoute isAuthenticated={isAuthenticated}><Layout onLogout={handleLogout}><Sales /></Layout></ProtectedRoute>} />
-        <Route path="/transactions" element={<ProtectedRoute isAuthenticated={isAuthenticated}><Layout onLogout={handleLogout}><Transactions /></Layout></ProtectedRoute>} />
-        <Route path="/transfers" element={<ProtectedRoute isAuthenticated={isAuthenticated}><Layout onLogout={handleLogout}><Transfers /></Layout></ProtectedRoute>} />
-        <Route path="/customers" element={<ProtectedRoute isAuthenticated={isAuthenticated}><Layout onLogout={handleLogout}><Customers /></Layout></ProtectedRoute>} />
-        <Route path="/suppliers" element={<ProtectedRoute isAuthenticated={isAuthenticated}><Layout onLogout={handleLogout}><Suppliers /></Layout></ProtectedRoute>} />
-        <Route path="/branches" element={<ProtectedRoute isAuthenticated={isAuthenticated}><Layout onLogout={handleLogout}><Branches /></Layout></ProtectedRoute>} />
-        <Route path="/expenses" element={<ProtectedRoute isAuthenticated={isAuthenticated}><Layout onLogout={handleLogout}><Expenses /></Layout></ProtectedRoute>} />
-        <Route path="/cash" element={<ProtectedRoute isAuthenticated={isAuthenticated}><Layout onLogout={handleLogout}><Cash /></Layout></ProtectedRoute>} />
-        <Route path="/reports" element={<ProtectedRoute isAuthenticated={isAuthenticated}><Layout onLogout={handleLogout}><Reports /></Layout></ProtectedRoute>} />
-        <Route path="/audit" element={<ProtectedRoute isAuthenticated={isAuthenticated}><Layout onLogout={handleLogout}><AuditLogs /></Layout></ProtectedRoute>} />
-        <Route path="/roles" element={<ProtectedRoute isAuthenticated={isAuthenticated}><Layout onLogout={handleLogout}><Roles /></Layout></ProtectedRoute>} />
-        <Route path="/settings" element={<ProtectedRoute isAuthenticated={isAuthenticated}><Layout onLogout={handleLogout}><Settings /></Layout></ProtectedRoute>} />
-      </Routes>
-    </BrowserRouter>
+    <ThemeProvider>
+      <BranchProvider>
+        <BrowserRouter>
+          <Routes>
+            <Route path="/login" element={
+              isAuthenticated ? <Navigate to="/" replace /> : <Login onLogin={handleLogin} />
+            } />
+            <Route path="/forgot-password" element={<ForgotPassword />} />
+            
+            {/* Protected Routes */}
+            <Route path="/" element={
+              <ProtectedRoute isAuthenticated={isAuthenticated}>
+                <Layout onLogout={handleLogout}><Dashboard /></Layout>
+              </ProtectedRoute>
+            } />
+            
+            {/* Placeholders for other routes */}
+            <Route path="/products" element={<ProtectedRoute isAuthenticated={isAuthenticated}><Layout onLogout={handleLogout}><Products /></Layout></ProtectedRoute>} />
+            <Route path="/inventory" element={<ProtectedRoute isAuthenticated={isAuthenticated}><Layout onLogout={handleLogout}><Inventory /></Layout></ProtectedRoute>} />
+            <Route path="/warehouse" element={<ProtectedRoute isAuthenticated={isAuthenticated}><Layout onLogout={handleLogout}><Warehouse /></Layout></ProtectedRoute>} />
+            <Route path="/sales" element={<ProtectedRoute isAuthenticated={isAuthenticated}><Layout onLogout={handleLogout}><Sales /></Layout></ProtectedRoute>} />
+            <Route path="/transactions" element={<ProtectedRoute isAuthenticated={isAuthenticated}><Layout onLogout={handleLogout}><Transactions /></Layout></ProtectedRoute>} />
+            <Route path="/transfers" element={<ProtectedRoute isAuthenticated={isAuthenticated}><Layout onLogout={handleLogout}><Transfers /></Layout></ProtectedRoute>} />
+            <Route path="/customers" element={<ProtectedRoute isAuthenticated={isAuthenticated}><Layout onLogout={handleLogout}><Customers /></Layout></ProtectedRoute>} />
+            <Route path="/suppliers" element={<ProtectedRoute isAuthenticated={isAuthenticated}><Layout onLogout={handleLogout}><Suppliers /></Layout></ProtectedRoute>} />
+            <Route path="/branches" element={<ProtectedRoute isAuthenticated={isAuthenticated}><Layout onLogout={handleLogout}><Branches /></Layout></ProtectedRoute>} />
+            <Route path="/expenses" element={<ProtectedRoute isAuthenticated={isAuthenticated}><Layout onLogout={handleLogout}><Expenses /></Layout></ProtectedRoute>} />
+            <Route path="/cash" element={<ProtectedRoute isAuthenticated={isAuthenticated}><Layout onLogout={handleLogout}><Cash /></Layout></ProtectedRoute>} />
+            <Route path="/reports" element={<ProtectedRoute isAuthenticated={isAuthenticated}><Layout onLogout={handleLogout}><Reports /></Layout></ProtectedRoute>} />
+            <Route path="/audit" element={<ProtectedRoute isAuthenticated={isAuthenticated}><Layout onLogout={handleLogout}><AuditLogs /></Layout></ProtectedRoute>} />
+            <Route path="/roles" element={<ProtectedRoute isAuthenticated={isAuthenticated}><Layout onLogout={handleLogout}><Roles /></Layout></ProtectedRoute>} />
+            <Route path="/settings" element={<ProtectedRoute isAuthenticated={isAuthenticated}><Layout onLogout={handleLogout}><Settings /></Layout></ProtectedRoute>} />
+          </Routes>
+        </BrowserRouter>
+      </BranchProvider>
+    </ThemeProvider>
   );
 }
 

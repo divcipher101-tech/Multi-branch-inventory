@@ -1,6 +1,8 @@
 import { useState, useEffect, useRef } from 'react';
-import { Search, Bell, Settings, LogOut, UserCircle, ChevronDown, Store } from 'lucide-react';
+import { Search, Bell, Settings, LogOut, UserCircle, ChevronDown, Store, Moon, Sun } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
+import { useTheme } from '../context/ThemeContext';
+import { useBranch } from '../context/BranchContext';
 import './Header.css';
 
 interface HeaderProps {
@@ -9,8 +11,13 @@ interface HeaderProps {
 
 export default function Header({ onLogout }: HeaderProps) {
   const [user, setUser] = useState<{name?: string, role?: string}>({ name: 'Admin User', role: 'Superadmin' });
+  const { isDarkMode, toggleDarkMode } = useTheme();
+  const { branches, activeBranchId, setActiveBranchId } = useBranch();
+  
   const [dropdownOpen, setDropdownOpen] = useState(false);
+  const [branchDropdownOpen, setBranchDropdownOpen] = useState(false);
   const dropdownRef = useRef<HTMLDivElement>(null);
+  const branchRef = useRef<HTMLDivElement>(null);
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -29,10 +36,15 @@ export default function Header({ onLogout }: HeaderProps) {
       if (dropdownRef.current && !dropdownRef.current.contains(event.target as Node)) {
         setDropdownOpen(false);
       }
+      if (branchRef.current && !branchRef.current.contains(event.target as Node)) {
+        setBranchDropdownOpen(false);
+      }
     };
     document.addEventListener('mousedown', handleClickOutside);
     return () => document.removeEventListener('mousedown', handleClickOutside);
   }, []);
+
+  const activeBranch = branches.find(b => b.id === activeBranchId);
 
   const handleLogoutClick = () => {
     setDropdownOpen(false);
@@ -49,20 +61,48 @@ export default function Header({ onLogout }: HeaderProps) {
       </div>
       
       <div className="header-actions">
-        <button className="branch-selector">
-          <Store size={18} className="text-muted" />
-          <span>All Branches</span>
-          <ChevronDown size={14} className="text-muted" />
-        </button>
+        <div className="branch-selector-container" ref={branchRef} style={{ position: 'relative' }}>
+          <button className="branch-selector" onClick={() => setBranchDropdownOpen(!branchDropdownOpen)}>
+            <Store size={18} className="text-muted" />
+            <span>{activeBranch ? activeBranch.name : 'All Branches'}</span>
+            <ChevronDown size={14} className="text-muted" />
+          </button>
+          
+          {branchDropdownOpen && (
+            <div className="profile-dropdown slide-down-fade" style={{ top: '100%', left: 0, width: '200px' }}>
+              <button 
+                className="dropdown-item" 
+                onClick={() => { setActiveBranchId(null); setBranchDropdownOpen(false); }}
+                style={{ fontWeight: !activeBranchId ? 'bold' : 'normal' }}
+              >
+                All Branches
+              </button>
+              {branches.map(branch => (
+                <button 
+                  key={branch.id} 
+                  className="dropdown-item" 
+                  onClick={() => { setActiveBranchId(branch.id); setBranchDropdownOpen(false); }}
+                  style={{ fontWeight: activeBranchId === branch.id ? 'bold' : 'normal' }}
+                >
+                  {branch.name}
+                </button>
+              ))}
+            </div>
+          )}
+        </div>
 
         <div className="action-divider"></div>
+
+        <button className="icon-btn" title="Toggle Theme" onClick={toggleDarkMode}>
+          {isDarkMode ? <Sun size={20} /> : <Moon size={20} />}
+        </button>
 
         <button className="icon-btn" title="Notifications">
           <Bell size={20} />
           <span className="badge pulse">3</span>
         </button>
         
-        <button className="icon-btn" title="Settings">
+        <button className="icon-btn" title="Settings" onClick={() => navigate('/settings')}>
           <Settings size={20} />
         </button>
         

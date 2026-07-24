@@ -62,6 +62,23 @@ router.get('/transfers', async (req, res) => {
   }
 });
 
+router.post('/transfers', async (req, res) => {
+  try {
+    const { productId, fromBranchId, toBranchId, quantity } = req.body;
+    const transfer = await prisma.stockTransfer.create({
+      data: {
+        productId,
+        fromBranchId,
+        toBranchId,
+        quantity: parseInt(quantity)
+      }
+    });
+    res.status(201).json(transfer);
+  } catch (error) {
+    res.status(500).json({ error: 'Failed to create transfer' });
+  }
+});
+
 // ==========================================
 // EXPENSES & CASH MANAGEMENT API
 // ==========================================
@@ -92,12 +109,30 @@ router.get('/customers', async (req, res) => {
   }
 });
 
+router.post('/customers', async (req, res) => {
+  try {
+    const customer = await prisma.customer.create({ data: req.body });
+    res.status(201).json(customer);
+  } catch (error) {
+    res.status(500).json({ error: 'Failed to create customer' });
+  }
+});
+
 router.get('/suppliers', async (req, res) => {
   try {
     const suppliers = await prisma.supplier.findMany({ orderBy: { createdAt: 'desc' } });
     res.json(suppliers);
   } catch (error) {
     res.status(500).json({ error: 'Failed to fetch suppliers' });
+  }
+});
+
+router.post('/suppliers', async (req, res) => {
+  try {
+    const supplier = await prisma.supplier.create({ data: req.body });
+    res.status(201).json(supplier);
+  } catch (error) {
+    res.status(500).json({ error: 'Failed to create supplier' });
   }
 });
 

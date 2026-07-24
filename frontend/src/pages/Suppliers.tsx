@@ -1,24 +1,56 @@
 import { useState, useEffect } from 'react';
-import { Plus, Truck, Building2 } from 'lucide-react';
+import { Plus, Building2, Loader, Truck } from 'lucide-react';
 import PageLayout from '../components/PageLayout';
+import Modal from '../components/Modal';
 import './Inventory.css';
 
 export default function Suppliers() {
   const [suppliers, setSuppliers] = useState<any[]>([]);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
-  useEffect(() => {
+  // Form state
+  const [name, setName] = useState('');
+  const [contact, setContact] = useState('');
+
+  const fetchSuppliers = () => {
     fetch('/api/operations/suppliers')
       .then(res => res.json())
       .then(data => setSuppliers(data))
       .catch(err => console.error(err));
+  };
+
+  useEffect(() => {
+    fetchSuppliers();
   }, []);
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setIsSubmitting(true);
+    try {
+      const res = await fetch('/api/operations/suppliers', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ name, contact })
+      });
+      if (res.ok) {
+        setIsModalOpen(false);
+        setName(''); setContact('');
+        fetchSuppliers();
+      }
+    } catch (err) {
+      console.error(err);
+    } finally {
+      setIsSubmitting(false);
+    }
+  };
 
   return (
     <PageLayout 
       title="Suppliers" 
       description="Manage raw materials, bottling partners, and juice concentrate vendors."
       actionButton={
-        <button className="btn-primary flex align-center gap-2">
+        <button className="btn-primary flex align-center gap-2" onClick={() => setIsModalOpen(true)}>
           <Plus size={18} /> Add Supplier
         </button>
       }
@@ -61,6 +93,25 @@ export default function Suppliers() {
           </table>
         </div>
       </div>
+
+      <Modal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} title="Add New Supplier">
+        <form className="modal-form" onSubmit={handleSubmit}>
+          <div className="modal-form-group">
+            <label>Supplier Name</label>
+            <input type="text" value={name} onChange={e => setName(e.target.value)} required placeholder="e.g. Fresh Farms Ltd" />
+          </div>
+          <div className="modal-form-group">
+            <label>Contact Details (Phone/Email)</label>
+            <input type="text" value={contact} onChange={e => setContact(e.target.value)} required placeholder="john@freshfarms.com" />
+          </div>
+          <div className="modal-footer">
+            <button type="button" className="btn-secondary" onClick={() => setIsModalOpen(false)}>Cancel</button>
+            <button type="submit" className="btn-primary" disabled={isSubmitting}>
+              {isSubmitting ? <Loader size={18} className="spin" /> : 'Save Supplier'}
+            </button>
+          </div>
+        </form>
+      </Modal>
     </PageLayout>
   );
 }

@@ -8,6 +8,7 @@ import inventoryRoutes from './routes/inventory';
 import salesRoutes from './routes/sales';
 import dashboardRoutes from './routes/dashboard';
 import operationsRoutes from './routes/operations';
+import usersRoutes from './routes/users';
 
 // Load environment variables
 dotenv.config();
@@ -27,6 +28,7 @@ app.use('/api/inventory', inventoryRoutes);
 app.use('/api/sales', salesRoutes);
 app.use('/api/dashboard', dashboardRoutes);
 app.use('/api/operations', operationsRoutes);
+app.use('/api/users', usersRoutes);
 
 // Basic Route
 app.get('/api/health', (req, res) => {

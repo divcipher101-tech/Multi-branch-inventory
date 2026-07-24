@@ -2,7 +2,7 @@ import PageLayout from '../components/PageLayout';
 import { useTheme } from '../context/ThemeContext';
 
 export default function Settings() {
-  const { theme, toggleTheme } = useTheme();
+  const { isDarkMode, toggleDarkMode } = useTheme();
   return (
     <PageLayout 
       title="Global Settings" 
@@ -31,8 +31,8 @@ export default function Settings() {
 
         <h2 style={{ fontSize: '1.25rem', marginBottom: '1.5rem', marginTop: '3rem', color: 'var(--text-main)' }}>Appearance</h2>
         <div style={{ display: 'flex', alignItems: 'center', gap: '1rem' }}>
-          <button className="btn-primary" onClick={toggleTheme} style={{ padding: '0.75rem 1.5rem', borderRadius: 'var(--radius-md)' }}>
-            {theme === 'light' ? 'Enable Dark Mode' : 'Disable Dark Mode'}
+          <button className="btn-primary" onClick={toggleDarkMode} style={{ padding: '0.75rem 1.5rem', borderRadius: 'var(--radius-md)' }}>
+            {!isDarkMode ? 'Enable Dark Mode' : 'Disable Dark Mode'}
           </button>
           <span style={{ color: 'var(--text-muted)', fontSize: '0.9rem' }}>Toggle between light and dark themes.</span>
         </div>
