@@ -4,7 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "install": "npm install --prefix frontend",
+    "build": "npm run build --prefix frontend && rm -rf public && cp -r frontend/dist public"
   },
   "keywords": [],
   "author": "",
