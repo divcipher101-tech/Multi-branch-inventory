@@ -1,0 +1,227 @@
+.top-header {
+  height: 72px;
+  background-color: var(--surface);
+  border-bottom: 1px solid var(--border-color);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 1.5rem;
+  z-index: 5;
+}
+
+.header-search {
+  display: flex;
+  align-items: center;
+  background-color: var(--surface-hover);
+  border-radius: var(--radius-lg);
+  padding: 0.5rem 1rem;
+  width: 350px;
+  transition: var(--transition-normal);
+  border: 1px solid transparent;
+}
+
+.header-search:focus-within {
+  background-color: var(--surface);
+  border-color: var(--primary);
+  box-shadow: 0 0 0 2px rgba(15, 140, 86, 0.1);
+}
+
+.search-icon {
+  color: var(--text-muted);
+  margin-right: 0.5rem;
+}
+
+.header-search input {
+  border: none;
+  background: transparent;
+  outline: none;
+  font-size: 0.9rem;
+  width: 100%;
+  color: var(--text-main);
+  font-family: inherit;
+}
+
+.header-search input::placeholder {
+  color: var(--text-muted);
+}
+
+.header-actions {
+  display: flex;
+  align-items: center;
+  gap: 1.25rem;
+}
+
+.icon-btn {
+  position: relative;
+  background: transparent;
+  border: none;
+  color: var(--text-muted);
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: var(--transition-fast);
+}
+
+.icon-btn:hover {
+  background-color: var(--surface-hover);
+  color: var(--text-main);
+}
+
+.badge {
+  position: absolute;
+  top: 6px;
+  right: 6px;
+  background-color: var(--danger);
+  color: white;
+  font-size: 0.65rem;
+  font-weight: 700;
+  min-width: 16px;
+  height: 16px;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0 4px;
+  border: 2px solid var(--surface);
+}
+
+.user-profile {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  cursor: pointer;
+  padding: 0.25rem 0.5rem;
+  border-radius: var(--radius-lg);
+  transition: var(--transition-fast);
+}
+
+.user-profile:hover {
+  background-color: var(--surface-hover);
+}
+
+.avatar {
+  width: 40px;
+  height: 40px;
+  background-color: #E2E8F0;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--text-muted);
+}
+
+.user-info {
+  display: flex;
+  flex-direction: column;
+}
+
+.user-name {
+  font-weight: 600;
+  font-size: 0.9rem;
+  color: var(--text-main);
+}
+
+.user-role {
+  font-size: 0.75rem;
+  color: var(--text-muted);
+}
+
+/* Dropdown Profile Menu */
+.user-profile-container {
+  position: relative;
+}
+
+.profile-dropdown {
+  position: absolute;
+  top: calc(100% + 0.5rem);
+  right: 0;
+  width: 220px;
+  background: var(--surface-color);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-lg);
+  z-index: 100;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+}
+
+.dropdown-header {
+  padding: 1rem;
+  background: var(--bg-color);
+}
+
+.dropdown-name {
+  font-weight: 600;
+  font-size: 0.95rem;
+  margin: 0 0 0.25rem 0;
+  color: var(--text-main);
+}
+
+.dropdown-email {
+  font-size: 0.8rem;
+  color: var(--text-muted);
+  margin: 0;
+}
+
+.dropdown-divider {
+  height: 1px;
+  background: var(--border-color);
+  width: 100%;
+}
+
+.dropdown-item {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.75rem 1rem;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  text-align: left;
+  font-size: 0.875rem;
+  color: var(--text-main);
+  transition: var(--transition-fast);
+}
+
+.dropdown-item:hover {
+  background: var(--surface-hover);
+}
+
+.dropdown-item.text-danger {
+  color: var(--danger);
+}
+
+.dropdown-item.text-danger:hover {
+  background: rgba(var(--danger-rgb), 0.05);
+}
+
+/* Animations */
+.slide-down-fade {
+  animation: slideDownFade 0.2s ease forwards;
+  transform-origin: top right;
+}
+
+@keyframes slideDownFade {
+  0% {
+    opacity: 0;
+    transform: scale(0.95) translateY(-10px);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+  }
+}
+
+.pulse {
+  animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+  0% { transform: scale(1); box-shadow: 0 0 0 0 rgba(var(--danger-rgb), 0.7); }
+  70% { transform: scale(1.1); box-shadow: 0 0 0 4px rgba(var(--danger-rgb), 0); }
+  100% { transform: scale(1); box-shadow: 0 0 0 0 rgba(var(--danger-rgb), 0); }
+}
