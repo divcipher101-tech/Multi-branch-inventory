@@ -7,7 +7,7 @@ export default function Transfers() {
   const [transfers, setTransfers] = useState<any[]>([]);
 
   useEffect(() => {
-    fetch('http://localhost:5000/api/operations/transfers')
+    fetch('/api/operations/transfers')
       .then(res => res.json())
       .then(data => setTransfers(data))
       .catch(err => console.error(err));

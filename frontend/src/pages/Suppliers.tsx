@@ -7,7 +7,7 @@ export default function Suppliers() {
   const [suppliers, setSuppliers] = useState<any[]>([]);
 
   useEffect(() => {
-    fetch('http://localhost:5000/api/operations/suppliers')
+    fetch('/api/operations/suppliers')
       .then(res => res.json())
       .then(data => setSuppliers(data))
       .catch(err => console.error(err));

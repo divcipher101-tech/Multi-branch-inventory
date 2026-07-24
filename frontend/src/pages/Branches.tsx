@@ -7,7 +7,7 @@ export default function Branches() {
   const [branches, setBranches] = useState<any[]>([]);
 
   useEffect(() => {
-    fetch('http://localhost:5000/api/operations/branches')
+    fetch('/api/operations/branches')
       .then(res => res.json())
       .then(data => setBranches(data))
       .catch(err => console.error(err));

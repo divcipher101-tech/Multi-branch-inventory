@@ -8,7 +8,7 @@ export default function Inventory() {
   const [searchTerm, setSearchTerm] = useState('');
 
   useEffect(() => {
-    fetch('http://localhost:5000/api/inventory')
+    fetch('/api/inventory')
       .then(res => res.json())
       .then(data => {
         setInventory(data);

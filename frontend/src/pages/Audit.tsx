@@ -7,7 +7,7 @@ export default function Audit() {
   const [logs, setLogs] = useState<any[]>([]);
 
   useEffect(() => {
-    fetch('http://localhost:5000/api/operations/audit-logs')
+    fetch('/api/operations/audit-logs')
       .then(res => res.json())
       .then(data => setLogs(data))
       .catch(err => console.error(err));

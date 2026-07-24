@@ -7,7 +7,7 @@ export default function Expenses() {
   const [expenses, setExpenses] = useState<any[]>([]);
 
   useEffect(() => {
-    fetch('http://localhost:5000/api/operations/expenses')
+    fetch('/api/operations/expenses')
       .then(res => res.json())
       .then(data => setExpenses(data))
       .catch(err => console.error(err));

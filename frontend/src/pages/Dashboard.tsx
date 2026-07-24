@@ -23,7 +23,7 @@ export default function Dashboard() {
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
-    fetch('http://localhost:5000/api/dashboard/kpis')
+    fetch('/api/dashboard/kpis')
       .then(res => res.json())
       .then(data => {
         setKpis(data);

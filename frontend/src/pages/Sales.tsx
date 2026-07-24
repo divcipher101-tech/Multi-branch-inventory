@@ -13,7 +13,7 @@ export default function Sales() {
 
   // Fetch available inventory items that are in stock
   useEffect(() => {
-    fetch('http://localhost:5000/api/inventory')
+    fetch('/api/inventory')
       .then(res => res.json())
       .then(data => {
         // Only show items with stock
@@ -76,13 +76,13 @@ export default function Sales() {
         method: paymentMethod
       };
 
-      const inventoryRes = await fetch('http://localhost:5000/api/inventory');
+      const inventoryRes = await fetch('/api/inventory');
       const inventoryData = await inventoryRes.json();
       if(inventoryData.length > 0) {
         payload.branchId = inventoryData[0].branchId;
       }
 
-      const res = await fetch('http://localhost:5000/api/sales/record', {
+      const res = await fetch('/api/sales/record', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(payload)
