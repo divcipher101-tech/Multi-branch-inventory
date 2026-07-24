@@ -93,9 +93,14 @@ export default function Header({ onLogout }: HeaderProps) {
 
         <div className="action-divider"></div>
 
-        <button className="icon-btn" title="Toggle Theme" onClick={toggleDarkMode}>
-          {isDarkMode ? <Sun size={20} /> : <Moon size={20} />}
-        </button>
+        <div className="theme-toggle-wrapper" title="Toggle Dark Mode">
+          <Moon size={16} className={`theme-icon ${isDarkMode ? 'active' : ''}`} />
+          <label className="theme-toggle">
+            <input type="checkbox" checked={!isDarkMode} onChange={toggleDarkMode} />
+            <span className="slider round"></span>
+          </label>
+          <Sun size={16} className={`theme-icon ${!isDarkMode ? 'active' : ''}`} />
+        </div>
 
         <button className="icon-btn" title="Notifications">
           <Bell size={20} />
