@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { Search, Plus, Wallet, ArrowDownRight, ArrowUpRight } from 'lucide-react';
+import { Wallet, ArrowDownRight, ArrowUpRight } from 'lucide-react';
 import PageLayout from '../components/PageLayout';
 import './Inventory.css';
 

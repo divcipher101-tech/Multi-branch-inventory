@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { Search, ShieldCheck, Activity } from 'lucide-react';
+import { ShieldCheck } from 'lucide-react';
 import PageLayout from '../components/PageLayout';
 import './Inventory.css';
 
