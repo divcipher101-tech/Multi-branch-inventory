@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { Search, Plus, Truck, Building2 } from 'lucide-react';
+import { Plus, Truck, Building2 } from 'lucide-react';
 import PageLayout from '../components/PageLayout';
 import './Inventory.css';
 

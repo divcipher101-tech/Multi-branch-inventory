@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { Search, Plus, Users, Mail, Phone, ShoppingCart } from 'lucide-react';
+import { Plus, Users, Mail, Phone } from 'lucide-react';
 import PageLayout from '../components/PageLayout';
 import './Inventory.css';
 
